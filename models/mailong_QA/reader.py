@@ -5,7 +5,7 @@ from pytorch_pretrained_bert.modeling import BertForQuestionAnswering
 from pytorch_pretrained_bert.tokenization import (BasicTokenizer,BertTokenizer,whitespace_tokenize)
 from utils import *
 from multiprocessing import Process, Pool
-
+import logging as logger
 class Args:
     bert_model = './resources'
     max_seq_length = 160

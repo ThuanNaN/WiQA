@@ -4,6 +4,6 @@
 
 #### Download model config/checkpoint, text data, ...
 ```
-cd bert-vietnamese-question-answering/resources
+cd models/bert-vietnamese-question-answering/resources
 sh download.sh
 ```
