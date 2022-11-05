@@ -4,7 +4,6 @@ import argparse
 
 from utils.retrieval import context_retrieval
 from utils.answering import nguyenvulebinh_qa, mailong_qa
-from utils.answering import QA
 from tqdm import tqdm
 
 
