@@ -8,3 +8,4 @@ datasets
 nltk
 tensorboard
 tensorboardX
+tqdm

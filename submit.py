@@ -4,6 +4,7 @@ import argparse
 
 from utils.retrieval import context_retrieval
 from utils.answering import QA
+from tqdm import tqdm
 
 
 def main():
@@ -38,7 +39,7 @@ def main():
         public_test_dict = json.loads(data)
         public_test_samples = public_test_dict['data']
 
-    for test_sample in public_test_samples:
+    for test_sample in tqdm(public_test_samples):
         id = test_sample["id"]
         question = test_sample["question"]
         relevant_doc = context_retrieval(question, corpus, bm25)
