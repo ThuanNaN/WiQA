@@ -1,4 +1,4 @@
-import numpy as np
+import pickle
 import json
 import argparse
 
@@ -12,7 +12,7 @@ def main():
 
     parser.add_argument('--test_path', type=str, default='./dataset/train_publicTest/zac2022_testa_only_question.json',
                         help='The test dataset json file')
-    parser.add_argument('--corpus_path', type=dict, default='./dataset/corpus.pkl',
+    parser.add_argument('--pickle_path', type=dict, default='./dataset/corpus.pkl',
                         help='Path to created corpus')
     parser.add_argument('--submit_filename', type=str, default='submission.json',
                         help='Filename of final submission json file')
@@ -20,7 +20,7 @@ def main():
     args = parser.parse_args()
 
     with open(args.corpus_path, 'rb') as f:
-        dataset = np.load(f, allow_pickle=True)
+        dataset = pickle.load(f)
 
     corpus = [
         record['text'] for record in dataset
@@ -58,5 +58,5 @@ def main():
     with open(submission_filename, "w+", encoding="utf8") as f:
         json.dump(submission_dict, f, indent=4, ensure_ascii=False)
 
-if __name__ == '__main__':
+if _name_ == '_main_':
     main()
