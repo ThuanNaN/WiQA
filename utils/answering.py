@@ -1,6 +1,8 @@
-from models.nguyenvulebinh_qa.infer import tokenize_function, data_collator, extract_answer
+from models.nguyenvulebinh_qa.infer import data_collator, extract_answer
 from models.nguyenvulebinh_qa.model.mrc_model import MRCQuestionAnswering
 from transformers import AutoTokenizer
+
+from utils import tokenize_function
 
 import nltk
 nltk.download('punkt')
