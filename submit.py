@@ -3,6 +3,7 @@ import json
 import argparse
 
 from utils.retrieval import context_retrieval
+from utils.answering import nguyenvulebinh_qa, mailong_qa
 from utils.answering import QA
 from tqdm import tqdm
 
@@ -43,7 +44,7 @@ def main():
         id = test_sample["id"]
         question = test_sample["question"]
         relevant_doc = context_retrieval(question, corpus, bm25)
-        answer = QA(question, relevant_doc)
+        answer = nguyenvulebinh_qa(question, relevant_doc)
 
         record = {
             "id": id,
@@ -62,4 +63,6 @@ def main():
         json.dump(submission_dict, f, indent=4, ensure_ascii=False)
 
 if __name__ == '__main__':
+
     main()
+

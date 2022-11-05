@@ -4,6 +4,7 @@
 
 #### Download model config/checkpoint, text data, ...
 ```
-cd bert-vietnamese-question-answering/resources
-sh download.sh
+cd models/bert-vietnamese-question-answering/resources
+gdown 1ml-Qwv4yHxepp852N-aL0U5iZzqLNZ4B
+tar -xf model.tar.gz
 ```
