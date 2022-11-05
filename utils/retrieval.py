@@ -1,4 +1,5 @@
 import re
+import pickle
 
 from rank_bm25 import BM25Okapi
 
@@ -11,9 +12,14 @@ def clean_text(text):
 
     return text
 
-def train_context_retrieval(corpus):
+def train_context_retrieval(corpus, save_bm25=True):
   tokenized_corpus = [clean_text(doc).split(" ") for doc in corpus]
   bm25 = BM25Okapi(tokenized_corpus)
+
+  if save_bm25 == True:
+    save_path = '../dataset/bm25.pkl'
+    with open(save_path, 'wb') as f:
+      pickle.dump(bm25, f)
 
   return bm25
 
