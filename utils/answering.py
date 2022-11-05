@@ -1,8 +1,7 @@
-from models.nguyenvulebinh_qa.infer import data_collator, extract_answer
+from models.nguyenvulebinh_qa.infer import data_collator, extract_answer, tokenize_function_2
 from models.nguyenvulebinh_qa.model.mrc_model import MRCQuestionAnswering
 from transformers import AutoTokenizer
 
-from utils import tokenize_function
 
 import nltk
 nltk.download('punkt')
@@ -17,7 +16,7 @@ def QA(question, context):
       "context": context
   }
   
-  inputs = [tokenize_function(QA_input, tokenizer)]
+  inputs = [tokenize_function_2(QA_input, tokenizer)]
   inputs_ids = data_collator(inputs, tokenizer)
   outputs = model(**inputs_ids)
   answer = extract_answer(inputs, outputs, tokenizer)
