@@ -3,14 +3,13 @@ import re
 from rank_bm25 import BM25Okapi
 
 def clean_text(text):
-  text = text.lower()
-  text = re.sub('BULLET::::- ', '', text)
-  text = re.sub('\w*\d\w*', '', text)
-  text = re.sub('\n', ' ',text)
-  text = re.sub('\t', ' ',text)
-  text = re.sub(r'http\S+', '', text)
-  #text = re.sub('[^a-z]',' ',text)
-  return text
+    text = text.lower()
+    text = re.sub('\n',' ', text)
+    text = re.sub('\t',' ', text)
+    text = re.sub('=*', '', text)
+    text = re.sub('(BULLET:*.) | (BULLET:*[0-9].)', '', text)
+
+    return text
 
 def train_context_retrieval(corpus):
   tokenized_corpus = [clean_text(doc).split(" ") for doc in corpus]
