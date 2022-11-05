@@ -10,7 +10,7 @@ from tqdm import tqdm
 def main():
     parser = argparse.ArgumentParser(description='Some arguments for submission file')
 
-    parser.add_argument('--test_path', type=str, default='./dataset/train_publicTest/zac2022_testa_only_question.json',
+    parser.add_argument('--test_path', type=str, default='./dataset/zac2022_testa_only_question.json',
                         help='The test dataset json file')
     parser.add_argument('--corpus_pkl_path', type=str, default='./dataset/corpus.pkl',
                         help='Path to created corpus')
