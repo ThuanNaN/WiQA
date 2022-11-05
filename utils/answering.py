@@ -21,4 +21,4 @@ def QA(question, context):
   outputs = model(**inputs_ids)
   answer = extract_answer(inputs, outputs, tokenizer)
 
-  return answer[0]['answer']
+  return answer[0]['answer']   
