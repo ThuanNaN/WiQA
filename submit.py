@@ -58,5 +58,5 @@ def main():
     with open(submission_filename, "w+", encoding="utf8") as f:
         json.dump(submission_dict, f, indent=4, ensure_ascii=False)
 
-if _name_ == '_main_':
+if __name__ == '_main_':
     main()
