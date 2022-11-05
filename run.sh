@@ -22,12 +22,11 @@ then
 else
     echo "Create dataset folder"
     mkdir $DATASET_FOLDER_PATH
+    cd $DATASET_FOLDER_PATH
+    # https://drive.google.com/file/d/1-wi2eY4XIg9v_COahiwDs6vt17zy2e08/view?usp=share_link
+    gdown --id 1-wi2eY4XIg9v_COahiwDs6vt17zy2e08
+    cd ..
 fi
-
-cd $DATASET_FOLDER_PATH
-# https://drive.google.com/file/d/1-wi2eY4XIg9v_COahiwDs6vt17zy2e08/view?usp=share_link
-gdown --id 1-wi2eY4XIg9v_COahiwDs6vt17zy2e08
-cd ..
 
 # create corpus
 if [ -e $CORPUS_PICKLE_PATH ]

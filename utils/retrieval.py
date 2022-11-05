@@ -26,7 +26,7 @@ def context_retrieval(question, corpus, bm25, top_k=1):
   return rank_lst[0]
 
 def main():
-  corpus_pkl_path = './dataset/corpus.pkl'
+  corpus_pkl_path = '../dataset/corpus.pkl'
   save_path = '../dataset/bm25.pkl'
   with open(corpus_pkl_path, 'rb') as f:
     dataset = pickle.load(f)
