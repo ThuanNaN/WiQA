@@ -3,11 +3,14 @@ from __future__ import absolute_import, division, print_function
 from torch.utils.data import (DataLoader, RandomSampler, SequentialSampler,TensorDataset)
 from pytorch_pretrained_bert.modeling import BertForQuestionAnswering
 from pytorch_pretrained_bert.tokenization import (BasicTokenizer,BertTokenizer,whitespace_tokenize)
-from utils import *
+from models.mailong_qa.utils import *
 from multiprocessing import Process, Pool
 
+import os
+
 class Args:
-    bert_model = './resources'
+    # bert_model = 'models/mailong_qa/resources'
+    bert_model = os.path.join(os.getcwd(),"models","mailong_qa","resources")
     max_seq_length = 160
     doc_stride = 160
     predict_batch_size = 20

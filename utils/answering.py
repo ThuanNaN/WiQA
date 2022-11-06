@@ -2,19 +2,18 @@ from models.nguyenvulebinh_qa.infer import data_collator, extract_answer, tokeni
 from models.nguyenvulebinh_qa.model.mrc_model import MRCQuestionAnswering
 from transformers import AutoTokenizer
 import nltk
+
 nltk.download('punkt')
 
+device = 'cuda'
 
-
-####
+#### mailong model
 from models.mailong_qa.reader import Reader
 reader = Reader()
 
-def mailong_qa(question, context):
+def mailong_qa(question, context):  
     answers, score = reader.getPredictions(question, [context])[0]
     return answers
-
-
 
 #####
 model_checkpoint = "nguyenvulebinh/vi-mrc-large"
