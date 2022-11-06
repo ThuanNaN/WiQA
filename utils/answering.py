@@ -1,4 +1,6 @@
 from models.nguyenvulebinh_qa.infer import data_collator_2device, extract_answer, tokenize_function_2
+import nltk
+nltk.download('punkt')
 
 #---------------------------
 #### mailong model
