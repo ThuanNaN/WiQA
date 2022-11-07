@@ -3,11 +3,15 @@ from __future__ import absolute_import, division, print_function
 from torch.utils.data import (DataLoader, RandomSampler, SequentialSampler,TensorDataset)
 from pytorch_pretrained_bert.modeling import BertForQuestionAnswering
 from pytorch_pretrained_bert.tokenization import (BasicTokenizer,BertTokenizer,whitespace_tokenize)
-from utils import *
+from models.mailong_qa.utils import *
 from multiprocessing import Process, Pool
 
+import os
+import logging as logger
+
 class Args:
-    bert_model = './resources'
+    # bert_model = 'models/mailong_qa/resources'
+    bert_model = os.path.join(os.getcwd(),"models","mailong_qa","resources")
     max_seq_length = 160
     doc_stride = 160
     predict_batch_size = 20
@@ -29,9 +33,9 @@ np.random.seed(args.seed)
 torch.manual_seed(args.seed)
 
 class Reader():
-    def __init__(self):
+    def __init__(self, device):
         self.log = {}
-        self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+        self.device = device
         self.tokenizer = BertTokenizer.from_pretrained(args.bert_model, do_lower_case=args.do_lower_case)
         self.model = BertForQuestionAnswering.from_pretrained(args.bert_model)
         self.model.to(self.device)

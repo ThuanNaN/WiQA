@@ -1,35 +1,32 @@
-from models.nguyenvulebinh_qa.infer import data_collator, extract_answer, tokenize_function_2
-from models.nguyenvulebinh_qa.model.mrc_model import MRCQuestionAnswering
-from transformers import AutoTokenizer
+from models.nguyenvulebinh_qa.infer import data_collator_2device, extract_answer, tokenize_function_2
 import nltk
 nltk.download('punkt')
 
+#---------------------------
+#### mailong model
 
-
-####
-from models.mailong_qa.reader import Reader
-reader = Reader()
-
-def mailong_qa(question, context):
-    answers, score = reader.getPredictions(question, [context])[0]
+def mailong_qa(model, question, context):  
+    answers, score = model["model"].getPredictions(question, [context])[0]
     return answers
+#---------------------------
 
 
+#---------------------------
+##### nguyenvulebinh model
 
-#####
-model_checkpoint = "nguyenvulebinh/vi-mrc-large"
-tokenizer = AutoTokenizer.from_pretrained(model_checkpoint)
-model = MRCQuestionAnswering.from_pretrained(model_checkpoint)
+def nguyenvulebinh_qa(model, question, context):
 
-def nguyenvulebinh_qa(question, context):
   QA_input = {
       "question": question,
       "context": context
   }
-  
+  tokenizer = model["tokenizer"]
+  device = model["device"]
   inputs = [tokenize_function_2(QA_input, tokenizer)]
-  inputs_ids = data_collator(inputs, tokenizer)
-  outputs = model(**inputs_ids)
+  inputs_ids = data_collator_2device(inputs, tokenizer, device)
+  outputs = model["model"](**inputs_ids)
   answer = extract_answer(inputs, outputs, tokenizer)
-
   return answer[0]['answer']
+
+
+
