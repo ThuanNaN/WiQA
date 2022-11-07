@@ -15,4 +15,6 @@ question_path: ./dataset/zac2022_testa_only_question.json
 
 title_id_file: ./dataset/titles_id.pkl
 
+raw_candidate_answers: ./outputs/raw_candidate_answers.json
+
 submission_name: ./outputs/submission.json
