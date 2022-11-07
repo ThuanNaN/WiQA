@@ -9,3 +9,5 @@ nltk
 tensorboard
 tensorboardX
 tqdm
+pyserini
+faiss-cpu==1.7.2
