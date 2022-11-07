@@ -1,6 +1,7 @@
 from models.nguyenvulebinh_qa.model.mrc_model import MRCQuestionAnswering
-from models.mailong_qa.reader import Reader
 from transformers import AutoTokenizer
+
+import re
 
 
 
@@ -15,13 +16,15 @@ def load_model(model_name, device):
             "tokenizer": tokenizer,
             "device":device
         } 
-    elif model_name == "mailong":
-        model = Reader(device=device)
-        return {
-            "model": model,
-            "tokenizer": None,
-            "device": device
-        }
+
+def clean_text(text):
+    text = text.lower()
+    text = re.sub('\n', ' ', text)
+    text = re.sub('\t', ' ', text)
+    text = re.sub('=*', '', text)
+    text = re.sub('(BULLET:*.) | (BULLET:*[0-9].)', '', text)
+
+    return text
     
 
     
