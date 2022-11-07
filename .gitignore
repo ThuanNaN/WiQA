@@ -132,3 +132,4 @@ dmypy.json
 data/
 dataset/
 /models/mailong_qa/resources/
+test_function.py

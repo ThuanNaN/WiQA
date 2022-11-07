@@ -1,0 +1,12 @@
+model: "nguyenvulebinh"
+
+device: "cuda"
+
+lucene: # add double hyphens before any arg
+    --collection: JsonCollection 
+    --input: /content/drive/MyDrive/ZaloAI-Challenge/code/tantn/WiQA/pyserini/ 
+    --language: vi 
+    --index: /content/drive/MyDrive/ZaloAI-Challenge/code/tantn/WiQA/indexes/test_subprocess 
+    --generator: DefaultLuceneDocumentGenerator 
+    --stemmer: none 
+    --threads": 1 
