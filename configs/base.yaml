@@ -1,12 +1,18 @@
-model: "nguyenvulebinh"
+model:
+    name: "nguyenvulebinh"
+    device: "cuda"
 
-device: "cuda"
+lucene: # all args must be followed to `pyserini` package
+    collection: JsonCollection 
+    input: ./pyserini/ 
+    language: vi 
+    index: ./indexes/test_subprocess 
+    generator: DefaultLuceneDocumentGenerator 
+    stemmer: none 
+    threads: 1
 
-lucene: # add double hyphens before any arg
-    --collection: JsonCollection 
-    --input: /content/drive/MyDrive/ZaloAI-Challenge/code/tantn/WiQA/pyserini/ 
-    --language: vi 
-    --index: /content/drive/MyDrive/ZaloAI-Challenge/code/tantn/WiQA/indexes/test_subprocess 
-    --generator: DefaultLuceneDocumentGenerator 
-    --stemmer: none 
-    --threads": 1 
+question_path: ./dataset/zac2022_testa_only_question.json
+
+title_id_file: ./dataset/titles_id.pkl
+
+submission_name: ./outputs/submission.json

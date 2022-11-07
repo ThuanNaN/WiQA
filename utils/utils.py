@@ -8,6 +8,16 @@ import os
 
 CONFIG_PATH = f"{os.getcwd()}/configs/"
 
+def load_config(config_name="base.yaml") -> dict:
+    """
+    Function to load YAML configuration file, default: "base.yaml"
+    """
+    with open(os.path.join(CONFIG_PATH, config_name)) as file:
+        config = yaml.safe_load(file)
+
+    return config
+
+CONFIG = load_config()
 
 def load_model(model_name, device):
     if model_name == "nguyenvulebinh":
@@ -41,19 +51,7 @@ def execute(cmd):
     return_code = popen.wait()
     if return_code:
         raise subprocess.CalledProcessError(return_code, cmd)
-    
 
-def load_config(config_name="base.yaml", key=None) -> dict:
-    """
-    Function to load YAML configuration file, default: "base.yaml"
-    """
-    with open(os.path.join(CONFIG_PATH, config_name)) as file:
-        config = yaml.safe_load(file)
-
-    if key:
-        return config[key]
-    else:
-        return config
 
 def get_title(doc_id: str, titles_list: list) -> str:
     for rec in titles_list:
