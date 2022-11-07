@@ -1,3 +1,4 @@
+import os
 import pickle
 import json
 import argparse
@@ -6,45 +7,20 @@ from utils.retrieval import context_retrieval
 from utils.answering import nguyenvulebinh_qa
 from tqdm import tqdm
 
-from utils import load_model, load_config, get_title
+from utils import CONFIG, load_model, get_title
 from pyserini.search.lucene import LuceneSearcher
 
 def main():
-    parser = argparse.ArgumentParser(description='Some arguments for submission file')
+    searcher = LuceneSearcher(CONFIG['lucene']['index'])
+    searcher.set_language(CONFIG['lucene']['language'])
 
-    parser.add_argument('--test_path', type=str, default='./dataset/zac2022_testa_only_question.json',
-                        help='The test dataset json file')
-    # parser.add_argument('--corpus_pkl_path', type=str, default='./dataset/corpus.pkl',
-    #                     help='Path to created corpus')
-    # parser.add_argument('--bm25_pkl_path', type=str, default='./dataset/bm25.pkl',
-    #                     help='Path to created bm25')
-    parser.add_argument('--title_ids', type=str, default='./dataset/titles_id.pkl',
-                        help='Path to created bm25')
-    parser.add_argument('--submit_filename', type=str, default='submission.json',
-                        help='Filename of final submission json file')
-    parser.add_argument('--lucene_index', type=str, default='./indexes/test_subprocess',
-                        help='Lucene index directory')
-    
-    args = parser.parse_args()
+    model = load_model(model_name=CONFIG['model']['name'], 
+                       device=CONFIG['model']['device'])
 
-    # with open(args.corpus_pkl_path, 'rb') as f:
-    #     dataset = pickle.load(f)
-
-    # corpus = [
-    #     record['text'] for record in dataset
-    # ]
-
-    # with open(args.bm25_pkl_path, 'rb') as f:
-    #     bm25 = pickle.load(f)
-
-
-    searcher = LuceneSearcher(args.lucene_index)
-    searcher.set_language('vi')
-
-    with open(args.title_ids, 'rb') as f:
+    with open(CONFIG['title_id_file'], 'rb') as f:
         titles_list = pickle.load(f)
 
-    public_test_path = args.test_path
+    public_test_path = CONFIG['question_path']
     records = []
 
     with open(public_test_path, "r", encoding="utf8") as f:
@@ -65,13 +41,12 @@ def main():
             "candidate_answers": []
         }
 
-
         for doc in docs:
             doc_id = doc['id']
             title = get_title(doc_id, titles_list)
             relevant_doc = doc['text']
 
-            answer = nguyenvulebinh_qa(question, relevant_doc)
+            answer = nguyenvulebinh_qa(model, question, relevant_doc)
 
             record['candidate_answers'].append(
                 {
@@ -87,11 +62,10 @@ def main():
         'data': records
     }
 
-    submission_filename = args.submit_filename
-    with open(submission_filename, "w+", encoding="utf8") as f:
+    os.makedirs("./outputs", exist_ok=True)
+    with open(CONFIG['submission_name'], "w+", encoding="utf8") as f:
         json.dump(submission_dict, f, indent=4, ensure_ascii=False)
 
 if __name__ == '__main__':
-
     main()
 
