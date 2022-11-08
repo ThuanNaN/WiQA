@@ -17,7 +17,7 @@ def rank_bm25_context_retrieval(question, corpus, bm25, top_k=1):
     tokenized_query = query.split(" ")
     rank_lst = bm25.get_top_n(tokenized_query, corpus, n=top_k)
 
-    return rank_lst[0]
+    return rank_lst
 
 def context_retrieval(question, lucene_searcher, top_k=1) -> list:
     assert top_k > 0 and top_k < 11, ValueError()

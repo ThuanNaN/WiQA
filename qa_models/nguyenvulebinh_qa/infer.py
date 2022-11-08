@@ -1,4 +1,4 @@
-from models.nguyenvulebinh_qa.model.mrc_model import MRCQuestionAnswering
+from qa_models.nguyenvulebinh_qa.model.mrc_model import MRCQuestionAnswering
 from transformers import AutoTokenizer, pipeline, RobertaForQuestionAnswering
 import torch
 from nltk import word_tokenize
