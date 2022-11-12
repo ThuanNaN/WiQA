@@ -16,8 +16,7 @@ def main():
     searcher = LuceneSearcher(CONFIG['lucene']['index'])
     searcher.set_language(CONFIG['lucene']['language'])
 
-    model = load_model(model_name=CONFIG['model']['name'], 
-                       device=CONFIG['model']['device'])
+    model = load_model(CONFIG)
 
     with open(CONFIG['title_id_file'], 'rb') as f:
         titles_list = pickle.load(f)

@@ -19,12 +19,13 @@ def load_config(config_name="base.yaml") -> dict:
 
 CONFIG = load_config()
 
-def load_model(model_name, device):
-    if model_name == "nguyenvulebinh":
-        model_checkpoint = "nguyenvulebinh/vi-mrc-large"
-        tokenizer = AutoTokenizer.from_pretrained(model_checkpoint)
-        model = MRCQuestionAnswering.from_pretrained(model_checkpoint)
-        model.to(device)
+def load_model(CONFIG):
+    if CONFIG['model']['name'] == "nguyenvulebinh":
+        model_chpt = CONFIG['model']['model_ckpt']
+        tokenizer_ckpt = CONFIG['model']['tokenizer_ckpt']
+        tokenizer = AutoTokenizer.from_pretrained(tokenizer_ckpt)
+        model = MRCQuestionAnswering.from_pretrained(model_chpt)
+        model.to(CONFIG['model']['device'])
         return {
             "model": model,
             "tokenizer": tokenizer,
