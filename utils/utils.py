@@ -29,7 +29,7 @@ def load_model(CONFIG):
         return {
             "model": model,
             "tokenizer": tokenizer,
-            "device":device
+            "device":CONFIG['model']['device']
         } 
 
 def clean_text(text):
