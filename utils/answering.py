@@ -29,4 +29,3 @@ def nguyenvulebinh_qa(model, question, context):
   return answer[0]['answer']
 
 
-
