@@ -21,7 +21,7 @@ def load_config(config_name="base.yaml") -> dict:
 CONFIG = load_config()
 
 def load_model(CONFIG):
-    assert CONFIG['model']['name'] not in MODEL_ZOO, \
+    assert CONFIG['model']['name'] in MODEL_ZOO, \
         ValueError(f"{CONFIG['model']['name']} is not in {MODEL_ZOO}")
 
     model_ckpt = CONFIG['model']['model_ckpt']
@@ -37,7 +37,7 @@ def load_model(CONFIG):
     model.to(CONFIG['model']['device'])
 
     print(f"Model: {model._get_name()}\n \
-            Tokenizer: {tokenizer.__name__()} \n \
+            Tokenizer: {tokenizer} \n \
             Device: {CONFIG['model']['device']}"
     )
 

@@ -8,7 +8,7 @@ from typing import Dict
 nltk.download('punkt')
 
 def answer(model: Dict, question: str, context: str):
-    def viMRC_qa(model: Dict, question: str, context: str):
+    def viMRC_qa():
         """
             Answering function of vi-MRC model
         """
@@ -27,7 +27,7 @@ def answer(model: Dict, question: str, context: str):
 
         return answer[0]['answer']
 
-    def phoBERT_qa(model: Dict, question: str, context: str):
+    def phoBERT_qa():
         _question = [question]
         _context = [context]
 
@@ -50,7 +50,7 @@ def answer(model: Dict, question: str, context: str):
         return answer
         
     if CONFIG['model']['name'] == "vimrc":
-        return viMRC_qa(model, question, context)
+        return viMRC_qa()
     
     else:
-        return phoBERT_qa(model, question, context)
+        return phoBERT_qa()

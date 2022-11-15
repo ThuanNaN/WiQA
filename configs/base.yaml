@@ -1,8 +1,8 @@
 model:
-    name: "nguyenvulebinh"
+    name: vimrc   # MODEL_ZOO = [vimrc, phobert]
     model_ckpt: nguyenvulebinh/vi-mrc-large
     tokenizer_ckpt: nguyenvulebinh/vi-mrc-large
-    device: "cuda"
+    device: cuda
 
 lucene: # all args must be followed to `pyserini` package
     collection: JsonCollection 

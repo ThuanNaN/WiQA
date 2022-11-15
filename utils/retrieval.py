@@ -41,23 +41,3 @@ def context_retrieval(question, lucene_searcher, top_k=1) -> list:
             }
             rs.append(obj)
         return rs
-
-
-# def main():
-#     corpus_pkl_path = './dataset/corpus.pkl'
-#     save_path = './dataset/bm25.pkl'
-#     with open(corpus_pkl_path, 'rb') as f:
-#         dataset = pickle.load(f)
-
-#     corpus = [
-#         record['text'] for record in dataset
-#     ]
-
-#     bm25 = train_context_retrieval(corpus)
-
-#     with open(save_path, 'wb') as f:
-#         pickle.dump(bm25, f)
-
-
-# if __name__ == '__main__':
-#     main()
