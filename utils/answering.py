@@ -47,7 +47,7 @@ def nguyenvulebinh_qa_v2(model, question, context):
         tokenizer = model["tokenizer"]
         device = model["device"]
 
-        inputs = [tokenize_function(QA_input, tokenizer)]
+        inputs = [tokenize_function_2(QA_input, tokenizer)]
         inputs_ids = data_collator_2device(inputs, tokenizer, device)
         outputs = model["model"](**inputs_ids)
 

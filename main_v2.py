@@ -6,7 +6,7 @@ import argparse
 from utils.retrieval import rank_bm25_context_retrieval
 from utils.retrieval import train_rank_bm25
 from utils.retrieval import context_retrieval
-from utils.answering import nguyenvulebinh_qa
+from utils.answering import nguyenvulebinh_qa, nguyenvulebinh_qa_v2
 from tqdm import tqdm
 
 from utils import CONFIG, load_model, get_title
@@ -53,7 +53,7 @@ def main():
 
             # for rel_sent in relevant_sentences:
 
-            answer = nguyenvulebinh_qa(model, question, relevant_doc)
+            answer = nguyenvulebinh_qa_v2(model, question, relevant_doc)
             if answer is not None:
                 record['candidate_answers'].append(
                     {
@@ -62,7 +62,7 @@ def main():
                         "answer": answer
                     }
                 )
-                break
+                # break
 
         records.append(record)
 
