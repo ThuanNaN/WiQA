@@ -17,6 +17,25 @@ def mailong_qa(model, question, context):
 
 def nguyenvulebinh_qa(model, question, context):
 
+
+  QA_input = {
+      "question": question,
+      "context": context
+  }
+
+  tokenizer = model["tokenizer"]
+  device = model["device"]
+
+  inputs = [tokenize_function_2(QA_input, tokenizer)]
+  inputs_ids = data_collator_2device(inputs, tokenizer, device)
+  outputs = model["model"](**inputs_ids)
+
+  answer = extract_answer(inputs, outputs, tokenizer)
+
+  return answer[0]["answer"]
+
+def nguyenvulebinh_qa_v2(model, question, context):
+
     lst_context = context.split(".")
     answers = []
 
