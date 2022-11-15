@@ -130,6 +130,8 @@ dmypy.json
 
 .DS_Store
 
+indexes/
+outputs/
 data/
 dataset/
 /models/mailong_qa/resources/

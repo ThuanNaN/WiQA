@@ -3,13 +3,13 @@ import pickle
 import json
 import argparse
 
-from utils.retrieval import rank_bm25_context_retrieval
-from utils.retrieval import train_rank_bm25
-from utils.retrieval import context_retrieval
-from utils.answering import nguyenvulebinh_qa
+
+from utils import rank_bm25_context_retrieval, train_rank_bm25, context_retrieval
+from utils import answer
+from utils import CONFIG, load_model, get_title
+
 from tqdm import tqdm
 
-from utils import CONFIG, load_model, get_title
 from pyserini.search.lucene import LuceneSearcher
 
 def main():
@@ -52,7 +52,7 @@ def main():
             relevant_sentences = rank_bm25_context_retrieval(question, sentences, sub_bm25, top_k=10)
 
             for rel_sent in relevant_sentences:
-                answer = nguyenvulebinh_qa(model, question, rel_sent)
+                answer = answer(model, question, rel_sent)
                 if answer is not None:
                     record['candidate_answers'].append(
                         {
