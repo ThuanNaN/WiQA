@@ -1,6 +1,7 @@
 import json
 import os
 import requests
+from tqdm import tqdm
 from utils import CONFIG
 
 def main():
@@ -12,7 +13,7 @@ def main():
 
     complete_answer = []
 
-    for raw_answer in raw_answers:
+    for raw_answer in tqdm(raw_answers):
         obj = {}
         obj['id'] = raw_answer['id']
         obj['question'] = raw_answer['question']
