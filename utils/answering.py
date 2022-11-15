@@ -4,7 +4,7 @@ from models.QA.viMRC import data_collator_2device, extract_answer, tokenize_func
 import nltk
 
 from typing import Dict
-=======
+
 from qa_models.nguyenvulebinh_qa.infer import data_collator_2device, extract_answer, tokenize_function_2, tokenize_function
 import nltk
 import numpy as np
