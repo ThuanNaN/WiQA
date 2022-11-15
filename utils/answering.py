@@ -1,4 +1,4 @@
-from models.nguyenvulebinh_qa.infer import data_collator_2device, extract_answer, tokenize_function_2
+from qa_models.nguyenvulebinh_qa.infer import data_collator_2device, extract_answer, tokenize_function_2
 import nltk
 nltk.download('punkt')
 
@@ -27,6 +27,5 @@ def nguyenvulebinh_qa(model, question, context):
   outputs = model["model"](**inputs_ids)
   answer = extract_answer(inputs, outputs, tokenizer)
   return answer[0]['answer']
-
 
 

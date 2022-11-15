@@ -3,6 +3,8 @@ import pickle
 import json
 import argparse
 
+from utils.retrieval import rank_bm25_context_retrieval
+from utils.retrieval import train_rank_bm25
 from utils.retrieval import context_retrieval
 from utils.answering import nguyenvulebinh_qa
 from tqdm import tqdm
@@ -14,8 +16,7 @@ def main():
     searcher = LuceneSearcher(CONFIG['lucene']['index'])
     searcher.set_language(CONFIG['lucene']['language'])
 
-    model = load_model(model_name=CONFIG['model']['name'], 
-                       device=CONFIG['model']['device'])
+    model = load_model(CONFIG)
 
     with open(CONFIG['title_id_file'], 'rb') as f:
         titles_list = pickle.load(f)
@@ -46,15 +47,21 @@ def main():
             title = get_title(doc_id, titles_list)
             relevant_doc = doc['text']
 
-            answer = nguyenvulebinh_qa(model, question, relevant_doc)
+            sentences = relevant_doc.split('.')
+            sub_bm25 = train_rank_bm25(sentences)
+            relevant_sentences = rank_bm25_context_retrieval(question, sentences, sub_bm25, top_k=10)
 
-            record['candidate_answers'].append(
-                {
-                    "doc_id": doc_id,
-                    "title": title,
-                    "answer": answer
-                }
-            )
+            for rel_sent in relevant_sentences:
+                answer = nguyenvulebinh_qa(model, question, rel_sent)
+                if answer is not None:
+                    record['candidate_answers'].append(
+                        {
+                            "doc_id": doc_id,
+                            "title": title,
+                            "answer": answer
+                        }
+                    )
+                    break
 
         records.append(record)
 

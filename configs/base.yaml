@@ -1,5 +1,7 @@
 model:
     name: "nguyenvulebinh"
+    model_ckpt: nguyenvulebinh/vi-mrc-large
+    tokenizer_ckpt: nguyenvulebinh/vi-mrc-large
     device: "cuda"
 
 lucene: # all args must be followed to `pyserini` package
