@@ -16,7 +16,7 @@ def main():
     searcher = LuceneSearcher(CONFIG['lucene']['index'])
     searcher.set_language(CONFIG['lucene']['language'])
 
-    model = load_model(CONFIG)
+    model = load_model()
 
     with open(CONFIG['title_id_file'], 'rb') as f:
         titles_list = pickle.load(f)
@@ -52,13 +52,13 @@ def main():
             relevant_sentences = rank_bm25_context_retrieval(question, sentences, sub_bm25, top_k=10)
 
             for rel_sent in relevant_sentences:
-                answer = answer(model, question, rel_sent)
-                if answer is not None:
+                _answer = model.answer(question, rel_sent)
+                if _answer is not None:
                     record['candidate_answers'].append(
                         {
                             "doc_id": doc_id,
                             "title": title,
-                            "answer": answer
+                            "answer": _answer
                         }
                     )
                     break

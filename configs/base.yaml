@@ -1,5 +1,9 @@
+model_zoo: 
+    vimrc 
+    albert
+
 model:
-    name: vimrc   # MODEL_ZOO = [vimrc, phobert]
+    name: vimrc
     model_ckpt: nguyenvulebinh/vi-mrc-large
     tokenizer_ckpt: nguyenvulebinh/vi-mrc-large
     device: cuda
