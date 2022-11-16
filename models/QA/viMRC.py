@@ -314,7 +314,7 @@ class viMRC:
         inputs = [tokenize_function_2(QA_input, self.tokenizer)]
         inputs_ids = data_collator_2device(inputs, self.tokenizer, self.device)
 
-        outputs = self.model["model"](**inputs_ids)
+        outputs = self.model(**inputs_ids)
         answer = extract_answer(inputs, outputs, self.tokenizer)
 
         return answer[0]['answer']

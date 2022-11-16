@@ -1,13 +1,14 @@
-from models import viMRC, Albert, phoBERT
+from models import viMRC, Albert
 from typing import Dict
 import re
 import subprocess
 import yaml
 import os
 
+import nltk
+nltk.download('punkt')
 
 CONFIG_PATH = f"{os.getcwd()}/configs/"
-MODEL_ZOO = ['vimrc', 'phobert', 'albert']
 
 def load_config(config_name="base.yaml") -> dict:
     """
@@ -19,6 +20,7 @@ def load_config(config_name="base.yaml") -> dict:
     return config
 
 CONFIG = load_config()
+MODEL_ZOO = [m for m in CONFIG['model_zoo'].split()]
 
 def load_model():
     assert CONFIG['model']['name'] in MODEL_ZOO, \
@@ -33,11 +35,6 @@ def load_model():
         model = viMRC(model_pretrained=model_ckpt,
                       tokenizer_pretrained=tokenizer_ckpt,
                       device=device)
-
-    elif CONFIG['model']['name'] == 'phobert':
-        model = phoBERT(model_pretrained=model_ckpt,
-                        tokenizer_pretrained=tokenizer_ckpt,
-                        device=device)
 
     elif CONFIG['model']['name'] == 'albert':
         model = Albert(model_pretrained=model_ckpt,

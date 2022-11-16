@@ -7,6 +7,5 @@
 
 from .QA.viMRC import viMRC
 from .QA.albert import Albert
-from .QA.phoBERT.phoBERT import phoBERT
 
-__all__ = ['viMRC', 'Albert', 'phoBERT']
+__all__ = ['viMRC', 'Albert']
