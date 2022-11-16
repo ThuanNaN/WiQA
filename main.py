@@ -53,7 +53,7 @@ def main():
 
             for rel_sent in relevant_sentences:
                 _answer = model.answer()
-                if answer is not None:
+                if _answer is not None:
                     record['candidate_answers'].append(
                         {
                             "doc_id": doc_id,
