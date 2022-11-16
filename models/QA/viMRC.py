@@ -4,6 +4,7 @@ from nltk import word_tokenize
 from transformers import AutoTokenizer, RobertaForQuestionAnswering, pipeline
 from transformers.models.auto import MODEL_FOR_QUESTION_ANSWERING_MAPPING
 import torch
+from typing import List
 
 class MRCQuestionAnswering(RobertaPreTrainedModel):
     config_class = RobertaConfig
@@ -117,7 +118,6 @@ class MRCQuestionAnswering(RobertaPreTrainedModel):
             hidden_states=outputs.hidden_states,
             attentions=outputs.attentions,
         )
-
 
 def tokenize_function(example, tokenizer):
     question_word = word_tokenize(example["question"])
@@ -289,3 +289,32 @@ def extract_answer(inputs, outputs, tokenizer):
             "score_end": score_end
         })
     return plain_result
+
+class viMRC:
+    def __init__(self, 
+                 model_pretrained: str, 
+                 tokenizer_pretrained: str, 
+                 device: str) -> None:
+
+        self.model = MRCQuestionAnswering.from_pretrained(model_pretrained)
+        self.tokenizer = AutoTokenizer.from_pretrained(tokenizer_pretrained)
+        self.device = device
+        
+        self.model = self.model.to(self.device)
+
+    def answer(self, 
+               question: str,
+               context: str) -> str:
+
+        QA_input = {
+            "question": question,
+            "context": context
+        }
+        
+        inputs = [tokenize_function_2(QA_input, self.tokenizer)]
+        inputs_ids = data_collator_2device(inputs, self.tokenizer, self.device)
+
+        outputs = self.model["model"](**inputs_ids)
+        answer = extract_answer(inputs, outputs, self.tokenizer)
+
+        return answer[0]['answer']

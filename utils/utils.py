@@ -1,5 +1,5 @@
-from models.QA.viMRC import MRCQuestionAnswering
-from transformers import AutoTokenizer
+from models import viMRC, Albert, phoBERT
+from typing import Dict
 import re
 import subprocess
 import yaml
@@ -7,7 +7,7 @@ import os
 
 
 CONFIG_PATH = f"{os.getcwd()}/configs/"
-MODEL_ZOO = ['vimrc', 'phobert']
+MODEL_ZOO = ['vimrc', 'phobert', 'albert']
 
 def load_config(config_name="base.yaml") -> dict:
     """
@@ -20,32 +20,33 @@ def load_config(config_name="base.yaml") -> dict:
 
 CONFIG = load_config()
 
-def load_model(CONFIG):
+def load_model():
     assert CONFIG['model']['name'] in MODEL_ZOO, \
         ValueError(f"{CONFIG['model']['name']} is not in {MODEL_ZOO}")
 
     model_ckpt = CONFIG['model']['model_ckpt']
     tokenizer_ckpt = CONFIG['model']['tokenizer_ckpt']
+    device = CONFIG['model']['device']
 
 
     if CONFIG['model']['name'] == "vimrc":
-        tokenizer = AutoTokenizer.from_pretrained(tokenizer_ckpt)
-        model = MRCQuestionAnswering.from_pretrained(model_ckpt)
+        model = viMRC(model_pretrained=model_ckpt,
+                      tokenizer_pretrained=tokenizer_ckpt,
+                      device=device)
+
+    elif CONFIG['model']['name'] == 'phobert':
+        model = phoBERT(model_pretrained=model_ckpt,
+                        tokenizer_pretrained=tokenizer_ckpt,
+                        device=device)
+
+    elif CONFIG['model']['name'] == 'albert':
+        model = Albert(model_pretrained=model_ckpt,
+                       tokenizer_pretrained=tokenizer_ckpt,
+                       device=device)
     else:
         raise NotImplementedError()
 
-    model.to(CONFIG['model']['device'])
-
-    print(f"Model: {model._get_name()}\n \
-            Tokenizer: {tokenizer} \n \
-            Device: {CONFIG['model']['device']}"
-    )
-
-    return {
-        "model": model,
-        "tokenizer": tokenizer,
-        "device":CONFIG['model']['device']
-    } 
+    return model
 
 def clean_text(text) -> str:
     text = re.sub('\n',' ', text)
@@ -67,7 +68,6 @@ def execute(cmd):
     return_code = popen.wait()
     if return_code:
         raise subprocess.CalledProcessError(return_code, cmd)
-
 
 def get_title(doc_id: str, titles_list: list) -> str:
     for rec in titles_list:
