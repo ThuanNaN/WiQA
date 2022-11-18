@@ -5,7 +5,6 @@ import argparse
 
 
 from utils import rank_bm25_context_retrieval, train_rank_bm25, context_retrieval
-from utils import answer
 from utils import CONFIG, load_model, get_title
 
 from tqdm import tqdm
@@ -32,7 +31,6 @@ def main():
     for test_sample in tqdm(public_test_samples):
         id = test_sample["id"]
         question = test_sample["question"]
-        # relevant_doc = context_retrieval(question, corpus, bm25)
 
         docs = context_retrieval(question, searcher, top_k=5)
 
